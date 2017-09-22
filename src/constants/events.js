@@ -1,0 +1,1 @@
+module.exports.DIR_WATCHER_CHANGED_EVENT = 'dirChanged';
