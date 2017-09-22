@@ -1,6 +1,5 @@
 const appConfig = require('./src/config/appConfig');
 const { User, Product } = require('./src/models');
-const DirWatcher = require('./src/dirwatcher');
 const Importer = require('./src/importer');
 
 console.log(appConfig.name);
@@ -8,9 +7,14 @@ console.log(appConfig.name);
 const user = new User();
 const product = new Product();
 
-const dirWatcher = new DirWatcher();
-const importer = new Importer();
+const importer = new Importer('./src/data/', 1000);
 
-dirWatcher.watch('./src/data', 1000);
+const dataAsync = importer.import('./src/data/MOCK_DATA.csv');
+dataAsync.then(data => {
+    console.log(data);
+});
 
-let data = importer.import('./src/data/MOCK_DATA.csv');
+const data = importer.importSync('./src/data/MOCK_DATA.csv');
+console.log(data);
+
+importer.importCsv();

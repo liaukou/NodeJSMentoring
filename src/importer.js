@@ -1,39 +1,30 @@
 const fs = require('fs');
-const csv = require('csvtojson');
-const { promisify } = require('util');
+const {promisify} = require('util');
 
-const { eventEmitter } = require('./eventEmitter');
+const DirWatcher = require('./dirwatcher');
+const csvToJson = require('./utils/csvToJson');
 
-const { DIR_WATCHER_CHANGED_EVENT } = require('./constants/events');
-
-const readDirAsync = promisify(fs.readdir);
 const readFileAsync = promisify(fs.readFile);
 
 class Importer {
-    constructor() {
+    constructor(path, delay) {
+        this.dirWatcher = new DirWatcher();
+        this.dirWatcher.watch(path, delay);
+    }
+
+    importCsv() {
+        this.dirWatcher.on(DirWatcher.event_types.CHANGED, () => {
+            console.log(DirWatcher.event_types.CHANGED);
+        });
     }
 
     import(path) {
-        eventEmitter.on(DIR_WATCHER_CHANGED_EVENT, (fileName) => {
-            readFileAsync(path)
-                .then((data) => {
-                    console.log(data)
-                });
-            // csv()
-            //     .fromFile(path)
-            //     .on('json',(jsonObj) => {
-            //         console.log(jsonObj)
-            //     })
-            //     .on('done',(error) => {
-            //         console.log('end')
-            //     })
-        });
+        return readFileAsync(path, 'utf8')
+            .then(data => csvToJson(data));
     }
 
     importSync(path) {
-        eventEmitter.on(DIR_WATCHER_CHANGED_EVENT, (fileName) => {
-            console.log('dirChanged');
-        });
+        return csvToJson(fs.readFileSync(path));
     }
 }
 
