@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "name": "Torres Patterson",
+    "email": "torrespatterson@injoy.com",
+    "phone": "+1 (847) 410-2897",
+    "address": "843 Juliana Place, Layhill, Idaho, 8051"
+  },
+  {
+    "id": 1,
+    "name": "Joy Rowland",
+    "email": "joyrowland@injoy.com",
+    "phone": "+1 (927) 485-3993",
+    "address": "617 Bogart Street, Carlos, Mississippi, 7142"
+  },
+  {
+    "id": 2,
+    "name": "Alta Kinney",
+    "email": "altakinney@injoy.com",
+    "phone": "+1 (868) 504-2502",
+    "address": "490 Brown Street, Dunlo, Indiana, 1944"
+  },
+  {
+    "id": 3,
+    "name": "Rosanne Young",
+    "email": "rosanneyoung@injoy.com",
+    "phone": "+1 (951) 538-3561",
+    "address": "723 Cove Lane, Williston, Marshall Islands, 1155"
+  },
+  {
+    "id": 4,
+    "name": "Thornton Vang",
+    "email": "thorntonvang@injoy.com",
+    "phone": "+1 (827) 400-2281",
+    "address": "351 Irving Street, Wedgewood, Federated States Of Micronesia, 3796"
+  },
+  {
+    "id": 5,
+    "name": "Horne Mclean",
+    "email": "hornemclean@injoy.com",
+    "phone": "+1 (956) 439-2852",
+    "address": "760 Canal Avenue, Hollins, Iowa, 6891"
+  }
+]
