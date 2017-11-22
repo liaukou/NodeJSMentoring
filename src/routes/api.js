@@ -2,7 +2,11 @@ const express = require('express');
 
 const controller = require('./route-controller');
 
+const tokenMiddleware = require('../middlewares/tokens');
+
 const router = express.Router();
+
+router.use(tokenMiddleware());
 
 router.get('/', function (req, res) {
     res.send('App Server');
@@ -48,10 +52,6 @@ router.get('/api/products/:id/reviews', function (req, res, next) {
 
 router.get('/api/users', function (req, res) {
     res.send(controller.getUsers());
-});
-
-router.use((err, req, res, next) => {
-    res.status(err.code).json(err);
 });
 
 module.exports = router;

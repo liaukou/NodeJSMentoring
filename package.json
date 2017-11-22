@@ -29,7 +29,11 @@
     "commander": "^2.11.0",
     "csvtojson": "^1.1.9",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
     "request": "^2.83.0",
     "stream-stream": "^1.2.6",
     "through2": "^2.0.3"

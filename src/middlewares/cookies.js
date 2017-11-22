@@ -4,7 +4,8 @@ const cookieMiddleware = function () {
         const cookies = req.headers.cookie;
 
         if (!cookies) {
-            next()
+            next();
+            return;
         }
 
         cookies.split(';').forEach(cookie => {
