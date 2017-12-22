@@ -1,91 +1,143 @@
 const jwt = require('jsonwebtoken');
-const Sequelize = require('sequelize');
-const DataTypes = require('sequelize/lib/data-types');
 
-const config = require('../config/config.json');
-const product = require('../models/product');
-const user = require('../models/user');
+const Products = require('../models/products');
+const Users = require('../models/users');
+const Cities = require('../models/cities');
 
-const db = new Sequelize(config.development);
-const products = product(db, DataTypes);
-const users = user(db, DataTypes);
+const _addLastModifiedDate = (item) => {
+    item.lastModifiedDate = Date.now();
+    return item;
+};
 
-const getProducts = (req, res, next) => {
-    products.findAll().then((data) => {
+const _delete = (req, res, next, model) => {
+    const id = req.params.id;
+    model.findByIdAndRemove(id, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send({
+                code: 200,
+                message: `Item with ${id} deleted successfully from ${model.collection.name}`
+            });
+        }
+        next();
+    })
+};
+
+const _save = (req, res, next, model) => {
+    const item = new model(_addLastModifiedDate(req.body));
+    item.save((err, item) => {
+        if (err) {
+            return console.error(err);
+        }
+        res.send(item);
+        next();
+    });
+};
+
+const _getAll = (req, res, next, model) => {
+    model.find({}).then((data) => {
         res.send(data);
         next();
     });
+};
+
+const _get = (req, res, next, model, field) => {
+    const id = req.params.id;
+    model.findById(id)
+        .then(data => {
+            if (data) {
+                field ? res.send(data[field]) : res.send(data);
+            } else {
+                res.send({
+                    code: 404,
+                    message: 'Content not found'
+                });
+            }
+            next();
+        });
+};
+
+const _put = (req, res, next, model) => {
+    const id = req.params.id;
+    const item = _addLastModifiedDate(req.body);
+    model.findByIdAndUpdate(id, item, {new: true, upsert: true}, (err, data) => {
+        if (err) {
+            return console.error(err);
+        }
+        res.send(data);
+        next();
+    });
+};
+
+const getProducts = (req, res, next) => {
+    _getAll(req, res, next, Products);
 };
 
 const getProduct = (req, res, next) => {
-    products.findOne({ where: { id: req.params.id} })
-        .then((data) => {
-            if (data) {
-                res.send(data);
-            } else {
-                res.send({
-                    code: 404,
-                    message: 'Content not found'
-                });
-            }
-            next();
-        });
+    _get(req, res, next, Products);
+};
+
+const deleteProduct = (req, res, next) => {
+    _delete(req, res, next, Products);
 };
 
 const getUsers = (req, res, next) => {
-    users.findAll().then((data) => {
-        res.send(data);
-        next();
-    });
+    _getAll(req, res, next, Users);
 };
 
 const getReviews = (req, res, next) => {
-    products.findOne({where: {id: req.params.id}})
-        .then((data) => {
-            if (data) {
-                res.send(data.reviews);
-            } else {
-                res.send({
-                    code: 404,
-                    message: 'Content not found'
-                });
-            }
-            next();
-        });
+    const reviews = "reviews";
+    _get(req, res, next, Products, reviews);
 };
 
 const saveProduct = (req, res, next) => {
-    const product = req.body;
-    products.create(product).then(data => {
-        res.send(data);
-        next();
-    });
+    _save(req, res, next, Products);
+};
+
+const deleteUser = (req, res, next) => {
+    _delete(req, res, next, Users);
+};
+
+const getCities = (req, res, next) => {
+    _getAll(req, res, next, Cities)
+};
+
+const saveCity = (req, res, next) => {
+    _save(req, res, next, Cities);
+};
+
+const putCity = (req, res, next) => {
+    _put(req, res, next, Cities);
+};
+
+const deleteCity = (req, res, next) => {
+    _delete(req, res, next, Cities);
 };
 
 const authenticate = (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    users.findOne({ where: { username, password} })
+    Users.findOne({username, password})
         .then(user => {
             if (user) {
                 const header = {
                     email: user.email,
                     username: user.username
                 };
-                const token = jwt.sign(header, 'secret', { expiresIn: 60 * 60 });
+                const token = jwt.sign(header, 'secret', {expiresIn: 60 * 60});
                 res.send({
                     code: 200,
                     message: 'OK',
-                    data: { user: header },
+                    data: user,
                     token: token
                 });
                 next();
             } else {
                 res.send({
                     code: 404,
-                    message: 'Not Found',
-                    data: {}
+                    message: 'Not Found'
                 });
                 next();
             }
@@ -98,5 +150,11 @@ module.exports = {
     getUsers,
     getReviews,
     saveProduct,
-    authenticate
+    authenticate,
+    deleteProduct,
+    deleteUser,
+    getCities,
+    saveCity,
+    putCity,
+    deleteCity
 };
