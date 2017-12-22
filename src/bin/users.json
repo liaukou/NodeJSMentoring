@@ -1,44 +1,32 @@
 [
   {
-    "id": 0,
-    "name": "Torres Patterson",
+    "username": "Torres Patterson",
     "email": "torrespatterson@injoy.com",
-    "phone": "+1 (847) 410-2897",
-    "address": "843 Juliana Place, Layhill, Idaho, 8051"
+    "password": "pass"
   },
   {
-    "id": 1,
-    "name": "Joy Rowland",
+    "username": "Joy Rowland",
     "email": "joyrowland@injoy.com",
-    "phone": "+1 (927) 485-3993",
-    "address": "617 Bogart Street, Carlos, Mississippi, 7142"
+    "password": "pass"
   },
   {
-    "id": 2,
-    "name": "Alta Kinney",
+    "username": "Alta Kinney",
     "email": "altakinney@injoy.com",
-    "phone": "+1 (868) 504-2502",
-    "address": "490 Brown Street, Dunlo, Indiana, 1944"
+    "password": "pass"
   },
   {
-    "id": 3,
-    "name": "Rosanne Young",
+    "username": "Rosanne Young",
     "email": "rosanneyoung@injoy.com",
-    "phone": "+1 (951) 538-3561",
-    "address": "723 Cove Lane, Williston, Marshall Islands, 1155"
+    "password": "pass"
   },
   {
-    "id": 4,
-    "name": "Thornton Vang",
+    "username": "Thornton Vang",
     "email": "thorntonvang@injoy.com",
-    "phone": "+1 (827) 400-2281",
-    "address": "351 Irving Street, Wedgewood, Federated States Of Micronesia, 3796"
+    "password": "pass"
   },
   {
-    "id": 5,
-    "name": "Horne Mclean",
+    "username": "Horne Mclean",
     "email": "hornemclean@injoy.com",
-    "phone": "+1 (956) 439-2852",
-    "address": "760 Canal Avenue, Hollins, Iowa, 6891"
+    "password": "pass"
   }
 ]
