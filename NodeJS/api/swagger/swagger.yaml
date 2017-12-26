@@ -1,0 +1,269 @@
+swagger: '2.0'
+info:
+  description: |
+    NodeJS server working with express, mongoDB and mongoose.
+  version: 1.0.0
+  title: NodeJS Mentoring task
+  contact:
+    email: levkov.andrew@gmail.com
+host: localhost:8084
+basePath: /
+tags:
+- name: cities
+  description: Cities
+- name: products
+  description: Products
+- name: users
+  description: Users
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+# schemes:
+# - http
+paths:
+  /api/cities:
+    x-swagger-router-controller: route-controller
+    post:
+      tags:
+      - cities
+      summary: Add a new city
+      operationId: saveCity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: City object
+        required: true
+        schema:
+          $ref: '#/definitions/City'
+      responses:
+        200:
+          description: OK
+    get:
+      tags:
+      - cities
+      summary: Returns all cities
+      operationId: getCities
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: JSON with Cities
+        404:
+          description: City not found
+  /api/cities/:id:
+    x-swagger-router-controller: route-controller
+    put:
+      tags:
+      - cities
+      summary: Add or update city by id
+      operationId: putCity
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: City object
+        required: true
+        schema:
+          $ref: '#/definitions/City'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+    delete:
+      tags:
+      - cities
+      summary: Delete city by id
+      operationId: deleteCity
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+  /api/products:
+    x-swagger-router-controller: route-controller
+    get:
+      tags:
+      - products
+      summary: Returns all products
+      operationId: getProducts
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+    post:
+      tags:
+      - products
+      summary: Save product
+      operationId: saveProduct
+      parameters:
+      - in: body
+        name: body
+        description: Product object
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Product'
+  /api/products/:id:
+    x-swagger-router-controller: route-controller
+    get:
+      tags:
+      - products
+      summary: Returns product by id
+      operationId: getProduct
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Product'
+        404:
+          description: Not found
+    delete:
+      tags:
+      - products
+      summary: Delete product by id
+      operationId: deleteProduct
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+  /api/products/:id/reviews:
+    x-swagger-router-controller: route-controller
+    get:
+      tags:
+      - products
+      summary: Returns product review by id
+      operationId: getReviews
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            type: string
+        404:
+          description: Not found
+  /api/users:
+    x-swagger-router-controller: route-controller
+    get:
+      tags:
+      - users
+      summary: Retuns all users
+      operationId: getUsers
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: Not found
+  /api/users/:id:
+    x-swagger-router-controller: route-controller
+    delete:
+      tags:
+      - users
+      summary: Delete user by id
+      operationId: deleteUser
+      produces:
+      - application/json
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+definitions:
+  City:
+    type: object
+    required:
+    - name
+    - country
+    - capital
+    properties:
+      name:
+        type: string
+      country:
+        type: string
+      capital:
+        type: string
+      location:
+        type: object
+        properties:
+          lat:
+            type: number
+          long:
+            type: number
+      lastModifiedDate:
+        type: string
+        format: date
+    xml:
+      name: City
+  User:
+    type: object
+    required:
+    - username
+    - email
+    - password
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      lastModifiedDate:
+        type: string
+        format: date
+    xml:
+      name: User
+  Product:
+    type: object
+    required:
+    - name
+    - brand
+    - price
+    properties:
+      name:
+        type: string
+      brand:
+        type: string
+      price:
+        type: number
+      reviews:
+        type: string
+      lastModifiedDate:
+        type: string
+        format: date
+    xml:
+      name: Product
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+schemes:
+ - https
+ - http
